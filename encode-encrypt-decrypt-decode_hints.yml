@@ -1,0 +1,15 @@
+Character Type | Range | Leading Bit Pattern
+UPPERCASE | AZ | 0x41 - 0x5a | 0x41 as 0100 and 0x5 as 011
+lowercase | az | 0x61 - 0x7A | 011
+numerals  | 09 | (not described) | 0011
+Spaces    |    | 0x20 | 0010
+ 
+
+
+
+● Hint I: a-z range from 0x61 to 0x7A, with a leading bit pattern of 011. Spaces are represented by 0x20, 
+with a pattern of 0010 (=0x2). XOR operations between these (a letter and a space) can reveal 
+shifts between uppercase and lowercase letters, aiding in pattern identification within 
+encrypted texts. 
+● Hint I: Numeric characters in ASCII start with the bit pattern 0011, assisting in 
+distinguishing numbers from letters during analysis.

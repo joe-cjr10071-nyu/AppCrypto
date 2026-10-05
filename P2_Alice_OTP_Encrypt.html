@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>P2_Bob_OTP_Decrypt</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>P2_Alice_OTP_Encrypt</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7796,25 +7796,104 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7b776a43-a1cc-41bc-889d-285eeed3a7ff">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c941fddd-6406-4372-9fb0-f8dd68fa3124">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Project-2-%E2%80%94-One-Time-Pad:-Bob's-Decryption">Project 2 — One-Time Pad: Bob's Decryption<a class="anchor-link" href="#Project-2-%E2%80%94-One-Time-Pad:-Bob-Decryption">¶</a></h1><p>This notebook implements Bob's portion of the one-time-pad exercise.</p>
-<p>Bob:</p>
+<h1 id="Project-2-%E2%80%94-One-Time-Pad:-Alice's-Encryption">Project 2 — One-Time Pad: Alice's Encryption<a class="anchor-link" href="#Project-2-%E2%80%94-One-Time-Pad:-Alice's-Encryption">¶</a></h1><p>This notebook implements Alice's portion of the one-time-pad exercise.</p>
+<p>Alice:</p>
 <ol>
-<li>Reads the ciphertext from a hexadecimal text file.</li>
-<li>Reads the key from a hexadecimal text file.</li>
+<li>Composes the plaintext message within the permitted keyspace.</li>
+<li>Generates a key equal in length to the plaintext.</li>
 <li>Converts both values to bytes.</li>
-<li>XORs the ciphertext with the key.</li>
-<li>Decodes and displays the recovered plaintext.</li>
+<li>XORs the plaintext with the key to compute the ciphertext.</li>
+<li>Writes the ciphertext to a hexadecimal text file.</li>
+<li>Writes the key from a hexadecimal text file.</li>
 </ol>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=33343b23-bd6c-410e-b5a1-08f3088051e2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8bb98c15-7306-46e6-bd1e-804947a8c307">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a7ca2fd3-38e6-4f57-a83d-6b2611c2d6e4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Functions:-Post-the-ciphertext-&amp;-key">Functions: Post the ciphertext &amp; key<a class="anchor-link" href="#Functions:-Post-the-ciphertext-&amp;-key">¶</a></h2><p>The following two code blocks are the XOR function <code>xor_bytes()</code> which contains the exception handler which evaluates if the ciphertex and key are non-matching in length, and the <code>write_hex_file()</code> to write out in the ASCII rendered in hexadecimal content.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6a5c5987-d7b4-4a18-ae11-d233d2be97db">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">xor_bytes</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-></span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Message and key must have the same length."</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">m</span> <span class="o">^</span> <span class="n">k</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=316cd581-10ff-4c2e-9fb7-9836a7e2248f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">write_hex_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-></span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"ASCII"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e0872f29-f004-4a38-a818-a86362bc80c8">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Alice's-Encrypt-&amp;-Write">Alice's Encrypt &amp; Write<a class="anchor-link" href="#Alice's-Encrypt-&amp;-Write">¶</a></h2><p>This section will prompt ALice to input the plain txt message which is then processed using the <code>token_bytes()</code> from the <strong>secrets</strong> library to generate a streamed key matching the plaintext character for character. The key is then XOR'ed against the plaintext message to render the ciphertext with the one-time pad.</p>
+<h2 id="Outputs-&amp;-Proofs">Outputs &amp; Proofs<a class="anchor-link" href="#Outputs-&amp;-Proofs">¶</a></h2><ul>
+<li>Alice's prompt and reponse</li>
+<li>Alice's plaintext</li>
+<li>Plaintext in hexadecimal</li>
+<li>Key in hexadecimal --> output as key.txt</li>
+<li>Ciphertext in hexaecimal --> output as ciphertext.txt</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d0b84394-af68-412a-9134-15f0476fe5c9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7822,94 +7901,25 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6853f00d-5f9c-4b70-ba7b-02f789cff78b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Functions:-Get-ciphertext-&amp;-key">Functions: Get ciphertext &amp; key<a class="anchor-link" href="#Functions:-Get-ciphertext-&amp;-key">¶</a></h2><p>The following two code blocks are the XOR function <code>xor_bytes()</code> which contains the exception handler which evaluates if the ciphertex and key are non-matching in length, and the <code>read_hex_file()</code> to read in the hexadecimal content and return the bytecode.</p>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">plaintext</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"Alice, enter the plaintext message: "</span><span class="p">)</span>
 
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d7222caf-c0db-4653-a348-2e15476c6129">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">xor_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-></span> <span class="nb">bytes</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Ciphertext and key must have the same length."</span><span class="p">)</span>
+<span class="n">plaintext_bytes</span> <span class="o">=</span> <span class="n">plaintext</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"ascii"</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">d</span> <span class="o">^</span> <span class="n">k</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0955d6ee-0296-42e9-98b0-717f7ae3b711">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">read_hex_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-></span> <span class="nb">bytes</span><span class="p">:</span>
-    <span class="n">hex_data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span>
-        <span class="n">encoding</span><span class="o">=</span><span class="s2">"ASCII"</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="c1"># Generate one random key byte for every plaintext byte</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plaintext_bytes</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">hex_data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0a6e3892-288f-4a9a-8882-632dd171a4cd">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Bob's-Decrypt-&amp;-Read">Bob's Decrypt &amp; Read<a class="anchor-link" href="#Bob's-Decrypt-&amp;-Read">¶</a></h2><p>This section will read in the ciphertext via and the key from hexadecimal encoding and XOR the stream to decrypt and display Alice's message. <code>read_hex_file</code> and decodes the XOR'ed hexadecimal to ASCII; it will then output the following proofs:</p>
-<ul>
-<li>ciphertext in hexadecimal</li>
-<li>key in hexadecimal</li>
-<li>Alice's plaintext</li>
-</ul>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ae058dc9-259b-47b6-8502-fb69a196a97c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">ciphertext</span> <span class="o">=</span> <span class="n">read_hex_file</span><span class="p">(</span><span class="s2">"ciphertext.txt"</span><span class="p">)</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">read_hex_file</span><span class="p">(</span><span class="s2">"key.txt"</span><span class="p">)</span>
+<span class="c1"># OTP encryption: C = M XOR K</span>
+<span class="n">ciphertext</span> <span class="o">=</span> <span class="n">xor_bytes</span><span class="p">(</span><span class="n">plaintext_bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
 
-<span class="n">plaintext_bytes</span> <span class="o">=</span> <span class="n">xor_bytes</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-<span class="n">plaintext</span> <span class="o">=</span> <span class="n">plaintext_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"ascii"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Plaintext:      "</span><span class="p">,</span> <span class="n">plaintext</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Plaintext hex:  "</span><span class="p">,</span> <span class="n">plaintext_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Key hex:        "</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Ciphertext hex: "</span><span class="p">,</span> <span class="n">ciphertext</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Ciphertext hex:"</span><span class="p">,</span> <span class="n">ciphertext</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Key hex:       "</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Plaintext:     "</span><span class="p">,</span> <span class="n">plaintext</span><span class="p">)</span>
+<span class="n">write_hex_file</span><span class="p">(</span><span class="s2">"ciphertext.txt"</span><span class="p">,</span> <span class="n">ciphertext</span><span class="p">)</span>
+<span class="n">write_hex_file</span><span class="p">(</span><span class="s2">"key.txt"</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Saved ciphertext.txt and key.txt"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7921,16 +7931,22 @@ a.anchor-link {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Ciphertext hex: 488e90bfc9f39a9b86766d85c296ce361502fa959d06c07b05b5
-Key hex:        05f7bc9fa69bbaf6ff561aeda3e2ee57356493fbf826a41a7c9b
-Plaintext:      My, oh my what a fine day.
+<pre>Plaintext:       My, oh my what a fine day.
+Plaintext hex:   4d792c206f68206d79207768617420612066696e65206461792e
+Key hex:         05f7bc9fa69bbaf6ff561aeda3e2ee57356493fbf826a41a7c9b
+Ciphertext hex:  488e90bfc9f39a9b86766d85c296ce361502fa959d06c07b05b5
+
+Saved ciphertext.txt and key.txt
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6f88f04a-1406-4422-836d-84adbcbff8cc">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ff84bd53-6018-47be-9913-94cb198663e7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
