@@ -1,0 +1,67 @@
+{
+  "exercise": "Problem 3 simulation",
+  "encoding": "ASCII plaintext; hex byte values",
+  "key_hex": "065076fda06a14b80f1f3d74c50a1e7798a243485d5fbf62e13f6a4ee33e34a82f",
+  "messages": [
+    {
+      "label": "M01",
+      "byte_length": 24,
+      "plaintext_hex": "4d656574206d65206e65617220746865206272696467652e",
+      "ciphertext_hex": "4b35138980077198617a5c06e57e7612b8c031213938da4c"
+    },
+    {
+      "label": "M02",
+      "byte_length": 25,
+      "plaintext_hex": "54686520726976657220697320717569657420746f6461792e",
+      "ciphertext_hex": "523813ddd20362dd7d3f5407e57b6b1efdd6633c323bde1bcf"
+    },
+    {
+      "label": "M03",
+      "byte_length": 30,
+      "plaintext_hex": "43616e20796f752073656520746865206d6f726e696e67206c696768743f",
+      "ciphertext_hex": "453118ddd90561987c7a5854b1627b57f5cd31263431d8428d560d269701"
+    },
+    {
+      "label": "M04",
+      "byte_length": 28,
+      "plaintext_hex": "57652073686f756c6420636f6d70617265206f7572206e6f7465732e",
+      "ciphertext_hex": "5135568ec80561d46b3f5e1ba87a7f05fd822c3d2f7fd10d955a1960"
+    },
+    {
+      "label": "M05",
+      "byte_length": 30,
+      "plaintext_hex": "4120736563726574206b6579206d7573742073746179207365637265742e",
+      "ciphertext_hex": "47700598c31871cc2f74580de5676b04ec82303c3c269f11845c182b9710"
+    },
+    {
+      "label": "M06",
+      "byte_length": 26,
+      "plaintext_hex": "506c65617365206272696e6720746865206e6f7465626f6f6b2e",
+      "ciphertext_hex": "563c139cd30f34da7d765313e57e7612b8cc2c3c383dd00d8a11"
+    },
+    {
+      "label": "M07",
+      "byte_length": 27,
+      "plaintext_hex": "54686520747261696e2077696c6c2061727269766520736f6f6e2e",
+      "ciphertext_hex": "523813ddd41875d1613f4a1da9663e16ead02a3e387fcc0d8e5144"
+    },
+    {
+      "label": "M08",
+      "byte_length": 27,
+      "plaintext_hex": "4b65657020746865206d6573736167657320696e206f726465722e",
+      "ciphertext_hex": "4d35138d801e7cdd2f725807b66b7912eb822a267d30cd06844d44"
+    },
+    {
+      "label": "M09",
+      "byte_length": 33,
+      "plaintext_hex": "57686174206368616e676573207768656e2077652072657573652061206b65793f",
+      "ciphertext_hex": "5138178980097cd961785807e57d7612f682342d7d2dda17925a4a2fc35551d110"
+    },
+    {
+      "label": "M10",
+      "byte_length": 31,
+      "plaintext_hex": "4e6f772077652063616e206f62736572766520746865207061747465726e2e",
+      "ciphertext_hex": "483f01ddd70f34db6e711d1ba7797b05eec7633c353a9f12804b1e2b91501a"
+    }
+  ]
+}

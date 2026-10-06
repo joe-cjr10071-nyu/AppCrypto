@@ -2,18 +2,18 @@
 
 ## Assignment and source
 
-- Project instructions: pending.
-- Source of ciphertexts: pending.
-- Required deliverables: pending.
-- Permitted plaintext characters: pending.
-- Number and ordering of ciphertexts: pending.
-- Designated target message, if any: pending.
-- Shared key and starting-offset assumptions: pending confirmation.
-- Input formatting changes: none recorded.
+- Project instructions: supplied PDF; see assignment_requirements.md.
+- Source of ciphertexts: project2-MTP-problems-v2026B.docx(1).pdf, pages 2–3; transcription details/hashes in data/provenance.json.
+- Required deliverables: written explanation of all four problems, Jupyter notebooks, and PDFs following Project 1 submission guidance.
+- Permitted plaintext characters: English; named punctuation is space, comma, period, and question mark. Initial candidate filter includes ASCII letters and digits (Hint I); clarify digit use if needed.
+- Number and ordering of ciphertexts: ten numbered inputs retained as C01–C10; one separately labeled TARGET.
+- Designated target message: explicit Target Message block, 59 bytes; different from the 52-byte C10.
+- Shared key and starting-offset assumptions: shared key given by Problem 4; comparisons assume each message starts at key byte zero.
+- Input formatting changes: joined wrapped hex fragments; removed numbering and excluded page footnotes; preserved digits and message order.
 
 ## Input validation
 
-Record malformed entries, ciphertext lengths, and any source discrepancies here.
+All ten numbered ciphertexts and the target parse as hexadecimal byte strings. Lengths: C01 78, C02 113, C03 90, C04 90, C05 103, C06 98, C07 110, C08 46, C09 123, C10 52; TARGET 59. Integrity checks compare the inputs with the recorded source fragments and hashes.
 
 ## Hypotheses and evidence
 
@@ -37,10 +37,11 @@ No recovery performed. Keep unknown positions explicit rather than silently fill
 
 ## Findings and open questions
 
-No findings recorded.
+The source's separate target differs from C10 despite its prose referring to the last message. Both are preserved. Space scores and crib tools are available, but no cribs or recovered key bytes have been accepted.
 
 ## Review and submission
 
 - Compare final results with the professor's required outputs.
 - Note unresolved positions and the evidence for any claimed recovery.
 - Regenerate notebook exports after the final analysis.
+
