@@ -10,7 +10,7 @@ This repository brings together Jupyter notebooks, exercise inputs, and rendered
 | --- | --- | --- |
 | One-Time Pad (OTP): Alice | Implemented; notebook includes example output | ASCII encoding, key generation, XOR encryption, hexadecimal file output |
 | One-Time Pad (OTP): Bob | Implemented; notebook includes example output | Hexadecimal file input, XOR decryption, ASCII decoding |
-| Many-Time Pad | Planned; preliminary hints included | Analysis notebooks, ciphertext data, and documented findings to be added |
+| Many-Time Pad | Starter workspace ready; dataset pending | Input validation and pairwise XOR notebook, preliminary hints, and analysis notes |
 | Other project components | To be added | Scope and artifacts will follow the project instructions |
 
 The repository is a working project workspace. Inclusion of a file does not establish a final submission or team approval.
@@ -22,7 +22,7 @@ The repository is a working project workspace. Inclusion of a file does not esta
 | `README.md` | Project overview, status, and usage |
 | `LICENSE` | Repository license |
 | [`OTP/`](OTP/) | Alice and Bob notebooks, HTML/PDF exports, and sample input files |
-| [`Many_Time_Pad/`](Many_Time_Pad/) | Preliminary analysis hints and space for upcoming work |
+| [`Many_Time_Pad/`](Many_Time_Pad/) | Starter notebook, ciphertext input folder, preliminary hints, and analysis notes |
 
 ### One-Time Pad files
 
@@ -64,17 +64,13 @@ The included sample decrypts to:
 
 These are classroom demonstration artifacts: the sample key and plaintext are intentionally visible. A real OTP requires a uniformly random secret key as long as the message, used only once; this exercise uses Python's cryptographically secure random-byte generator.
 
-## Many-Time Pad: upcoming work
+## Many-Time Pad: starter workspace
 
-The [`Many_Time_Pad/`](Many_Time_Pad/) folder currently contains preliminary character-pattern and XOR hints. Planned additions include:
+Open [P2_Many_Time_Pad_Analysis.ipynb](Many_Time_Pad/P2_Many_Time_Pad_Analysis.ipynb) for input validation, length inspection, and pairwise XOR comparison. See the [folder README](Many_Time_Pad/README.md) for setup.
 
-- Analysis and attack notebooks.
-- Relevant ciphertext datasets.
-- Notes on methodology, assumptions, and candidate plaintext.
-- Findings with supporting evidence.
-- HTML/PDF exports where useful.
+The assignment dataset has not yet been added. Place ciphertexts in `Many_Time_Pad/data/ciphertexts.txt`, one hexadecimal ciphertext per nonempty line, preserving source order. Record the project requirements, assumptions, hypotheses, and results in [analysis_notes.md](Many_Time_Pad/analysis_notes.md).
 
-Label tentative deductions clearly and distinguish them from verified results. Add further project components in their own folders as their scope is established.
+The workspace is prepared; plaintext recovery and final analysis remain to be developed against the project instructions. Add HTML/PDF exports when meaningful results are ready.
 
 ## Team workflow
 
