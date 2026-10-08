@@ -26,7 +26,11 @@ No cribs are accepted initially. Scoring and readable candidate fragments do not
 
 ## Run the notebooks
 
-Use Python 3.9 or newer with a Jupyter Python kernel. The notebook code requires only the standard library. Run from this folder or the repository root, setting the kernel working directory accordingly.
+Use Python 3.9 or newer with a Jupyter Python kernel. The notebook code requires only the standard library.
+
+Problem 3 also runs as a standalone download. It creates a `data/` folder relative to the kernel's working directory, or uses `Many_Time_Pad/data/` when that folder is available from the repository root. Its first code cell prints the output location.
+
+Problem 4 requires the supplied input files. Run its notebook from this folder or the repository root, setting the kernel working directory accordingly.
 
 The simulation notebook writes `data/simulation.json`. The analysis notebook reads the official inputs without modifying them.
 
