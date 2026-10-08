@@ -1,0 +1,67 @@
+{
+  "exercise": "Problem 3 simulation",
+  "encoding": "ASCII plaintext; hex byte values",
+  "key_hex": "522d9299c042c3ca6e4b6c9e5fa6d20b0dab541979dd30c9fda69d0a31045cb43d736e0463",
+  "messages": [
+    {
+      "label": "M01",
+      "byte_length": 31,
+      "plaintext_hex": "486f77206d616e79206f662075732061726520696e20746865206b6e6f773f",
+      "ciphertext_hex": "1a42e5b9ad23adb34e240abe2ad5f26a7fce747017fd44a19886f6645e7363"
+    },
+    {
+      "label": "M02",
+      "byte_length": 27,
+      "plaintext_hex": "4920737065616b206e616d656c79206f66204a6f686e20536e6f77",
+      "ciphertext_hex": "1b0de1e9a523a8ea002a01fb33dff2646b8b1e7611b3109a93c9ea"
+    },
+    {
+      "label": "M03",
+      "byte_length": 32,
+      "plaintext_hex": "7468617420776f756c64206265204b696e6720696e20746865204e6f7274682e",
+      "ciphertext_hex": "2645f3ede035acbf022f4cfc3a86996263cc747017fd44a19886d3654370349a"
+    },
+    {
+      "label": "M04",
+      "byte_length": 26,
+      "plaintext_hex": "5468652044776172662c20746865205370696465722c20616e64",
+      "ciphertext_hex": "0645f7b98435a2b808674cea37c3f2587dc2307c0bf110a893c2"
+    },
+    {
+      "label": "M05",
+      "byte_length": 32,
+      "plaintext_hex": "61206772616e64206d61657374657220746f6f2c20616e6420616e204567672e",
+      "ciphertext_hex": "330df5eba12ca7ea032a09ed2bc3a02b79c43b3559bc5eadddc7f32a74633b9a"
+    },
+    {
+      "label": "M06",
+      "byte_length": 36,
+      "plaintext_hex": "4974206973206e6f20736563726574206e6f772c2062757420696e666f726d6174696f6e",
+      "ciphertext_hex": "1b59b2f0b362ada54e3809fd2dc3a62b63c4233559bf45bdddcff36c5e7631d5491a016a"
+    },
+    {
+      "label": "M07",
+      "byte_length": 35,
+      "plaintext_hex": "496620486572204772616365207765726520746f206c6561726e206f662069742e2e2e",
+      "ciphertext_hex": "1b4bb2d1a530e38d1c2a0ffb7fd1b779688b207659b155a88fc8bd65572435c0135d40"
+    },
+    {
+      "label": "M08",
+      "byte_length": 37,
+      "plaintext_hex": "4b6565702073696c656e636520666f72206e6f772e20496620676f647320626520676f6f64",
+      "ciphertext_hex": "1948f7e9e031aaa60b250ffb7fc0bd792dc53b6e57fd79afddc1f26e42243ed11d14016b07"
+    },
+    {
+      "label": "M09",
+      "byte_length": 30,
+      "plaintext_hex": "7765207368616c6c2073656520746865206d6f726e696e6720616c697665",
+      "ciphertext_hex": "2548b2eaa823afa64e3809fb7fd2ba6e2dc63b6b17b45eaeddc7f1634761"
+    },
+    {
+      "label": "M10",
+      "byte_length": 30,
+      "plaintext_hex": "616e64206e6f7420626520666f6464657220666f7220647261676f6e732e",
+      "ciphertext_hex": "3343f6b9ae2db7ea0c2e4cf830c2b66e7f8b32760bfd54bb9cc1f264422a"
+    }
+  ]
+}
